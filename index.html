@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta charset='utf8'/>
+<title>minitube</title>
+<style>
+body    { margin: 0; padding: 0; }
+#player {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+#help {
+  text-align: center;
+  padding: 1em;
+  font-size: 1.2em;
+  font-family: sans-serif;
+}
+#error { color: red; display: block; }
+h1 { margin-bottom: 0.1em; }
+#youtube-icon {
+  color: white;
+  background-color: red;
+  font-size: 0.8em;
+  padding: 0.25em 0.3em 0.1em 0.3em;
+  border-radius: 10px;
+}
+.header {
+  font-size: 0.8em;
+  color: gray;
+}
+</style>
+</head>
+<body>
+<div id='help'>
+  <h1><span id='youtube-icon'>▶</span> minitube</h1>
+  <span class='header'>No nonsense 'full-page' player.</span>
+  <p>
+    <b>Tip:</b> You can use minitube easily from a youtube video by replacing
+    "youtube.com/watch?v=" with "minitube.surge.sh/#".
+  </p>
+  <span id='error'></span>
+</div>
+<div id='player'></div>
+<script>
+function onYouTubeIframeAPIReady() {
+  var videoId = location.hash.substr(1);
+  if (videoId === "") {
+    document.getElementById('error').textContent = 'No video ID.';
+    return;
+  }
+
+  document.body.removeChild(document.getElementById('help'));
+  new YT.Player('player', {
+    height: window.innerHeight,
+    width:  window.innerWidth,
+    videoId: videoId,
+  });
+}
+</script>
+<script src='https://www.youtube.com/iframe_api' async></script>
+</body>
+</html>
